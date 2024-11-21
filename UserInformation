@@ -26,20 +26,23 @@ class UserInformation {
             return "ОПРЕДЕЛИТЬ_НЕ_УДАЛОСЬ";
             }
         }
-        public String getAge(){
-            LocalDate today= LocalDate.now();
-            Period period= Period.between(birthDate,today);
-            int years_old= period.getYears();
+        public String getAge() {
+            LocalDate today = LocalDate.now();
+            Period period = Period.between(birthDate, today);
+            int years_old = period.getYears();
 
-            if((years_old % 11 == 0 ) || (years_old == 1)){
+            if(years_old==11){
+                return years_old + " " + "лет";
+            } else if((years_old % 11 == 0 ) || (years_old == 1)){
                 return years_old + " " + "год";
             } else if (years_old <= 20){
                 return years_old + " " + "лет";
             } else if ((years_old % 10 >= 2) && (years_old % 10 <5)) {
                 return years_old + " " + "года";
-            } else {
+            } else{
                 return years_old + " " + "лет";
             }
         }
 
     }
+
