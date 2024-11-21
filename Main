@@ -1,0 +1,21 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
+
+public class Main{
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner (System.in);
+            System.out.print("Введите свое ФИО: ");
+            String fullName = scanner.nextLine();
+            System.out.print("Введите свою дату рождения в формате: число.месяц.год: ");
+            String dateInput= scanner.nextLine();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.M.yyyy");
+            LocalDate birthDate = LocalDate.parse(dateInput.replace("/", "."), formatter);
+            UserInformation userInformation = new UserInformation(fullName, birthDate);
+            System.out.println(userInformation.getInitials());
+            System.out.println("пол: " + userInformation.getGender());
+            System.out.println("возраст: " + userInformation.getAge());
+            scanner.close();
+    }
+
+}
