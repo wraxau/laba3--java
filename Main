@@ -1,21 +1,39 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
-public class Main{
-        public static void main(String[] args) {
-            Scanner scanner = new Scanner (System.in);
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String fullName = null;
+        LocalDate birthDate = null;
+        try {
             System.out.print("Введите свое ФИО: ");
-            String fullName = scanner.nextLine();
+            fullName = scanner.nextLine();
+            if (fullName.trim().isEmpty()) {
+                throw new IllegalArgumentException("Некорректный формат ввода ФИО");
+            }
             System.out.print("Введите свою дату рождения в формате: число.месяц.год: ");
-            String dateInput= scanner.nextLine();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.M.yyyy");
-            LocalDate birthDate = LocalDate.parse(dateInput.replace("/", "."), formatter);
-            UserInformation userInformation = new UserInformation(fullName, birthDate);
-            System.out.println(userInformation.getInitials());
-            System.out.println("пол: " + userInformation.getGender());
-            System.out.println("возраст: " + userInformation.getAge());
+            String dateInput = scanner.nextLine();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+            birthDate = LocalDate.parse(dateInput, formatter);
+            if (birthDate.isAfter(LocalDate.now())) {
+                throw new IllegalArgumentException("Некорректная дата рождения");
+            }
+            
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка: " + e.getMessage());
+            return; 
+        } catch (DateTimeParseException e) {
+            System.out.println("Некорректная дата рождения введите в формате дд.мм.гггг.");
+            return;
+        } finally {
             scanner.close();
+        }
+        UserInformation userInformation = new UserInformation(fullName, birthDate);
+        System.out.println(userInformation.getInitials());
+        System.out.println("Пол: " + userInformation.getGender());
+        System.out.println("Возраст: " + userInformation.getAge());
     }
-
 }
