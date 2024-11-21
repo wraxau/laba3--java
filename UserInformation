@@ -1,0 +1,45 @@
+import java.time.LocalDate;
+import java.time.Period;
+class UserInformation {
+    private String fullName;
+    public LocalDate birthDate;
+
+    public UserInformation(String fullName, LocalDate birthDate){
+        this.fullName = fullName;
+        this.birthDate=birthDate;
+    }
+    public String getInitials(){
+        String[] separate = fullName.split(" ");
+        return separate[0] + " " + separate[1].charAt(0) + "."+ separate[2].charAt(0) + ".";
+
+    }
+    public String getGender(){
+        String[] separate = fullName.split(" ");
+        String thirdname = separate[2];
+        if ((thirdname.endsWith("овна")) || (thirdname.endsWith("на")) ||  (thirdname.endsWith("евна")) ||  (thirdname.endsWith("ична"))){
+            return "Ж";
+        }
+        else if ((thirdname.endsWith("ович")) || (thirdname.endsWith("евич")) || (thirdname.endsWith("ич"))){
+            return "М";
+            }
+        else {
+            return "ОПРЕДЕЛИТЬ_НЕ_УДАЛОСЬ";
+            }
+        }
+        public String getAge(){
+            LocalDate today= LocalDate.now();
+            Period period= Period.between(birthDate,today);
+            int years_old= period.getYears();
+
+            if((years_old % 11 == 0 ) || (years_old == 1)){
+                return years_old + " " + "год";
+            } else if (years_old <= 20){
+                return years_old + " " + "лет";
+            } else if ((years_old % 10 >= 2) && (years_old % 10 <5)) {
+                return years_old + " " + "года";
+            } else {
+                return years_old + " " + "лет";
+            }
+        }
+
+    }
